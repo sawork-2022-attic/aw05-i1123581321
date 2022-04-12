@@ -3,16 +3,22 @@ package com.micropos.products.service;
 import com.micropos.products.model.Product;
 import com.micropos.products.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final Random random = new Random();
 
-    public ProductServiceImpl(@Autowired ProductRepository productRepository) {
+
+    @Autowired
+    public ProductServiceImpl( ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -22,12 +28,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProduct(String id) {
+    public Optional<Product> getProduct(String id) {
         return productRepository.findProduct(id);
     }
 
     @Override
     public Product randomProduct() {
-        return null;
+        var list = products();
+        return list.get(random.nextInt(list.size()));
     }
 }

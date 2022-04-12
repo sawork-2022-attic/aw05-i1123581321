@@ -1,0 +1,95 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Cart
+  license:
+    name: MIT
+paths:
+  /cart:
+    get:
+      summary: get cart content
+      operationId: listCart
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: add a product
+      operationId: addItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Item"
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /cart/{productId}:
+    delete:
+      summary: remove an item
+      operationId: removeItem
+      parameters:
+        - name: productId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '204':
+          description: The resource was deleted successfully.
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+        - cart
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - id
+        - number
+      properties:
+        id:
+          type: string
+        number:
+          type: integer
+          format: int32
+    Cart:
+      type: array
+      items:
+        $ref: '#/components/schemas/Item'
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
