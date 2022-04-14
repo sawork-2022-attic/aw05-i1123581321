@@ -40,6 +40,5 @@ public class ProductController implements ProductsApi {
     public ResponseEntity<ProductDto> showProductById(String productId) {
         var p = productService.getProduct(productId);
         return p.map(product -> ResponseEntity.ok(productMapper.toProductDto(product))).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-
     }
 }

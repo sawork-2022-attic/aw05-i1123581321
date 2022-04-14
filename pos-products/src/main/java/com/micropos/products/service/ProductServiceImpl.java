@@ -3,6 +3,7 @@ package com.micropos.products.service;
 import com.micropos.products.model.Product;
 import com.micropos.products.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(value = "products", key = "#root.method.name")
     public List<Product> products() {
         return productRepository.allProducts();
     }

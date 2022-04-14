@@ -16,12 +16,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cart'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
     post:
       summary: add a product
       operationId: addItem
@@ -38,12 +32,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cart'
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
   /cart/{productId}:
     delete:
       summary: remove an item
@@ -57,12 +45,6 @@ paths:
       responses:
         '204':
           description: The resource was deleted successfully.
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
       tags:
         - cart
 components:
@@ -82,14 +64,3 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Item'
-    Error:
-      type: object
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string

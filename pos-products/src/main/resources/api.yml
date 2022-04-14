@@ -18,12 +18,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Products"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
   /products/{productId}:
     get:
       summary: Info for a specific product
@@ -44,12 +38,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Product"
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
 components:
   schemas:
     Product:
@@ -70,14 +58,3 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Product"
-    Error:
-      type: object
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
